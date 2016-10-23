@@ -5,12 +5,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+
 
 public class MainActivity extends AppCompatActivity {
+    File file;
+    String fileName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,37 +24,28 @@ public class MainActivity extends AppCompatActivity {
         createBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                File file = new File(getApplicationContext().getFilesDir(), "numbers.txt");
-                BufferedWriter out = new BufferedWriter(new FileWriter(file));
-                for (int i = 1; i <= 10; i++) {
-                    try {
-                        out.write(i);
-                        out.newLine();
-                        Thread.sleep(250);
-                    }
-                    catch(IOException ex){
-                        ex.printStackTrace();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
+                CreateNumbers createNumbers = new CreateNumbers();
+                createNumbers.execute("numbers.txt");
             }
         });
 
         loadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                LoadNumbers loadNumbers = new LoadNumbers();
+                loadNumbers.execute(false); //not clear
             }
         });
 
         clearBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                LoadNumbers loadNumbers = new LoadNumbers();
+                loadNumbers.execute(true); //clear the screen?
             }
         });
 
-
     }
+
+
 }
